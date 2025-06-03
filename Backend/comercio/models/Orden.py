@@ -16,6 +16,11 @@ class Orden(models.Model):
     comprobante_pago = models.ImageField(
         upload_to='comprobantes/', null=True, blank=True
     )
+    productos = models.ManyToManyField(
+        'Producto',
+        through='OrdenItem',
+        related_name='ordenes'
+    )
 
 
     def __str__(self):
