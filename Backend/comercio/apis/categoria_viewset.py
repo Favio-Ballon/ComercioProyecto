@@ -12,6 +12,6 @@ class CategoriaSerializer(serializers.ModelSerializer):
 
 
 class CategoriaViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowGetAnyElseAuthenticatedAndPermitted]
+    # permission_classes = [AllowGetAnyElseAuthenticatedAndPermitted]
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer

@@ -51,7 +51,14 @@ export const Header = () => {
 
           <div className="flex items-center space-x-4">
             <button className="text-foreground hover:text-primary">
-              <FiShoppingCart className="h-6 w-6" />
+              <FiShoppingCart
+                onClick={() => {
+                  navigate("/carrito");
+                }}
+                className={`h-6 w-6 ${
+                  currentSection === "carrito" ? "text-primary" : ""
+                }`}
+              />
             </button>
             <div className="md:hidden">
               <button
