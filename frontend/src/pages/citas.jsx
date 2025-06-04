@@ -5,9 +5,6 @@ import {
   FiClock,
   FiCalendar,
   FiDollarSign,
-  FiUser,
-  FiPhone,
-  FiMail,
   FiFileText,
 } from "react-icons/fi";
 import { Header } from "../components/header";

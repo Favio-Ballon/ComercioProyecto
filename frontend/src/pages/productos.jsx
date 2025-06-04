@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { FiSearch, FiShoppingCart, FiX } from "react-icons/fi";
 import { Header } from "../components/header";
 import axios from "axios";
+import { ProductoService } from "../services/ProductoService";
 
 export const Productos = () => {
+  const [notification, setNotification] = useState("");
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -12,22 +14,6 @@ export const Productos = () => {
       category: "Headphones",
       image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
       rating: 4.5,
-    },
-    {
-      id: 2,
-      name: "Premium Battery Pack",
-      price: 49.99,
-      category: "Batteries",
-      image: "https://images.unsplash.com/photo-1619641805634-b867f535071f",
-      rating: 4.0,
-    },
-    {
-      id: 3,
-      name: "Leather Phone Case",
-      price: 39.99,
-      category: "Accessories",
-      image: "https://images.unsplash.com/photo-1541877590-a664adc89dde",
-      rating: 4.2,
     },
   ]);
 
@@ -111,8 +97,24 @@ export const Productos = () => {
     );
   };
 
-  const handleAddToCart = (productId) => {
-    console.log(`Added product ${productId} to cart`);
+  const handleAdd = async (productId) => {
+    try {
+      const result = await new ProductoService().handleAddToCart(productId);
+      if (!result) {
+        setNotification("No se pudo añadir el producto al carrito.");
+        setTimeout(() => setNotification(""), 2500);
+        return;
+      } else {
+        setNotification("Producto añadido al carrito exitosamente.");
+        setTimeout(() => setNotification(""), 2500);
+      }
+
+      console.log(result);
+    } catch (error) {
+      console.error("Error al añadir producto al carrito:", error);
+      setNotification("Ocurrió un error al añadir el producto.");
+      setTimeout(() => setNotification(""), 2500);
+    }
   };
 
   return (
@@ -239,7 +241,7 @@ export const Productos = () => {
                             {product.price} Bs
                           </span>
                           <button
-                            onClick={() => handleAddToCart(product.id)}
+                            onClick={() => handleAdd(product.id)}
                             className="bg-primary text-primary-foreground px-4 py-2 rounded-sm hover:bg-opacity-90 transition-colors"
                             aria-label={`Add ${product.name} to cart`}
                           >
@@ -256,6 +258,11 @@ export const Productos = () => {
           </div>
         </div>
       </div>
+      {notification && (
+        <div className="fixed top-6 right-6 z-50 bg-green-500 text-white px-6 py-3 rounded shadow-lg transition-all animate-fade-in">
+          {notification}
+        </div>
+      )}
     </>
   );
 };

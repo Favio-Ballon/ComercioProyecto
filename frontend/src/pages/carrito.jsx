@@ -1,46 +1,51 @@
 import { useState, useEffect } from "react";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { Header } from "../components/header";
-import axios from "axios";
+import { isLoggedIn } from "../services/AuthService";
+import { ProductoService } from "../services/ProductoService";
 
 export const Carrito = () => {
   const [cartItems, setCartItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/comercio/carrito/", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDczNTQ4LCJpYXQiOjE3NDg5ODcxNDgsImp0aSI6IjY4NzJkMWY1ZGMxYjRhMmRiNDI0ZDFkMTc3MzA0MTViIiwidXNlcl9pZCI6M30.JYl7-mkOMSTAj4dg5J3E2r_m-fMBTXlaVq15ESVgMZs`,
-        },
-      })
-      .then((response) => {
-        const data = response.data;
-        const items = [];
+    getProductosEnCarrito();
+  }, []);
 
-        data.forEach((usuario) => {
-          usuario.carrito_items.forEach((item) => {
-            const producto = item.producto;
-            items.push({
-              id: item.id,
-              title: producto.nombre,
-              author: producto.categoria.nombre,
-              price: parseFloat(producto.precio),
-              quantity: item.cantidad,
-              image: producto.imagen,
-            });
+  useEffect(() => {
+    if (isLoggedIn()) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+  const getProductosEnCarrito = async () => {
+    try {
+      const results = await new ProductoService().getProductosCarrito();
+      const items = [];
+
+      results.forEach((usuario) => {
+        usuario.carrito_items.forEach((item) => {
+          const producto = item.producto;
+          items.push({
+            id: producto.id,
+            title: producto.nombre,
+            author: producto.categoria.nombre,
+            price: parseFloat(producto.precio),
+            quantity: item.cantidad,
+            image: producto.imagen,
           });
         });
-
-        setCartItems(items);
-      })
-      .catch((error) => {
-        console.error("Error al cargar los productos del carrito:", error);
       });
-  }, []);
+      setCartItems(items);
+    } catch (error) {
+      console.error("Error al cargar los productos del carrito:", error);
+    }
+  };
 
   const updateQuantity = (id, change) => {
     setCartItems((prev) =>
@@ -52,8 +57,28 @@ export const Carrito = () => {
     );
   };
 
+  const handleRemoveFromCart = async (productId) => {
+    try {
+      const response = await new ProductoService().removeFromCart(productId);
+      console.log("Producto eliminado del carrito:", response);
+
+      if (response.status === 200) {
+        setNotification("Producto eliminado del carrito exitosamente.");
+        setTimeout(() => setNotification(""), 2500);
+      } else {
+        setNotification("No se pudo eliminar el producto del carrito.");
+        setTimeout(() => setNotification(""), 2500);
+      }
+    } catch (error) {
+      console.error("Error al eliminar producto del carrito:", error);
+      setNotification("Ocurrió un error al eliminar el producto.");
+      setTimeout(() => setNotification(""), 2500);
+    }
+  };
+
   const removeItem = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
+    handleRemoveFromCart(id);
     setShowModal(false);
   };
 
@@ -210,6 +235,11 @@ export const Carrito = () => {
           )}
         </div>
       </div>
+      {notification && (
+        <div className="fixed top-6 right-6 z-50 bg-green-500 text-white px-6 py-3 rounded shadow-lg transition-all animate-fade-in">
+          {notification}
+        </div>
+      )}
     </>
   );
 };

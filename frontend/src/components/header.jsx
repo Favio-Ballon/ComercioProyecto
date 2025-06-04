@@ -1,11 +1,21 @@
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import logo from "../assets/logo_audioprod.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { isLoggedIn } from "../services/AuthService";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
 
   const location = useLocation();
   const currentSection = location.pathname.split("/")[1];
@@ -37,7 +47,14 @@ export const Header = () => {
               >
                 Productos
               </button>
-              <button className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+              <button
+                className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
+                  currentSection === "servicios" ? "text-primary" : ""
+                }`}
+                onClick={() => {
+                  navigate("/servicios");
+                }}
+              >
                 Servicios
               </button>
               <button className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
@@ -50,16 +67,44 @@ export const Header = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="text-foreground hover:text-primary">
-              <FiShoppingCart
-                onClick={() => {
-                  navigate("/carrito");
-                }}
-                className={`h-6 w-6 ${
-                  currentSection === "carrito" ? "text-primary" : ""
+            {isAuthenticated ? (
+              <>
+                <button className="text-foreground hover:text-primary">
+                  <FiShoppingCart
+                    onClick={() => {
+                      navigate("/carrito");
+                    }}
+                    className={`h-6 w-6 ${
+                      currentSection === "carrito" ? "text-primary" : ""
+                    }`}
+                  />
+                </button>
+                {/* cerrar sesion */}
+                <button
+                  className="text-foreground hover:text-primary pl-5"
+                  onClick={() => {
+                    //eliminar token
+                    localStorage.removeItem("access_token");
+                    localStorage.removeItem("refresh_token");
+                    setIsAuthenticated(false);
+                    navigate("/login");
+                  }}
+                >
+                  Cerrar Sesión
+                </button>
+              </>
+            ) : (
+              <button
+                className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
+                  currentSection === "login" ? "text-primary" : ""
                 }`}
-              />
-            </button>
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Iniciar Sesión
+              </button>
+            )}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
