@@ -34,7 +34,7 @@ class CarritoViewSet(viewsets.ModelViewSet):
         return Carrito.objects.filter(usuario=user)
 
     @action(detail=False, methods=['post'], url_path='add')
-    def add_libro(self, request):
+    def add_producto(self, request):
         carrito = Carrito.objects.get(usuario=request.user)
         producto = request.data.get('producto')
         cantidad = request.data.get('cantidad')
@@ -60,10 +60,20 @@ class CarritoViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], url_path='remove')
     def remove_producto(self, request):
         carrito = Carrito.objects.get(usuario=request.user)
+        if not carrito:
+            return Response({'error': 'Carrito no encontrado'}, status=404)
         producto_id = request.data.get('producto')
+
+        # convert producto_id to int if it's a string
+        try:
+            producto_id = int(producto_id)
+        except (ValueError, TypeError):
+            return Response({'error': 'El ID del producto debe ser un número entero'}, status=400)
 
         if not producto_id:
             return Response({'error': 'El ID del producto es requerido'}, status=400)
+        print(carrito.id)
+        print(producto_id)
 
         try:
             carrito_item = CarritoItem.objects.filter(
