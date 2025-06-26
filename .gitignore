@@ -6,3 +6,4 @@ Backend/Backend/__pycache__/settings.cpython-311.pyc
 Backend/comercio/apis/__pycache__/carrito_viewset.cpython-311.pyc
 Backend/comercio/apis/__pycache__/carrito_viewset.cpython-311.pyc
 Backend/db.sqlite3
+frontend/.env

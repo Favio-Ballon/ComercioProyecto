@@ -1,5 +1,5 @@
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
-import logo from "../assets/logo_audioprod.png";
+import logo from "../assets/logo_audioprod.webp";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { isLoggedIn } from "../services/AuthService";
@@ -60,7 +60,14 @@ export const Header = () => {
               <button className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
                 Sobre Nosotros
               </button>
-              <button className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+              <button
+                className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
+                  currentSection === "contacto" ? "text-primary" : ""
+                }`}
+                onClick={() => {
+                  navigate("/contacto");
+                }}
+              >
                 Contacto
               </button>
             </div>
