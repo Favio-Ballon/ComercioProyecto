@@ -3,13 +3,33 @@ import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { Header } from "../components/header";
 import { isLoggedIn } from "../services/AuthService";
 import { ProductoService } from "../services/ProductoService";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import StripeCheckoutForm from "../components/StripeCheckoutForm";
+import apiClient from "../services/interceptors";
+
+// ---- Mock Data (reemplaza esto con los datos reales de tu app) ----
+const mockCartItems = [
+  { id: 1, name: "Audífono Modelo X", price: 1500, quantity: 1 },
+  { id: 2, name: "Pilas para audífono (6-pack)", price: 80, quantity: 2 },
+];
+
+// -------------------------------------------------------------
+
+// Carga tu clave pública de Stripe desde las variables de entorno.
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 export const Carrito = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(mockCartItems);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [notification, setNotification] = useState("");
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [clientSecret, setClientSecret] = useState(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getProductosEnCarrito();
@@ -93,6 +113,81 @@ export const Carrito = () => {
     setItemToDelete(item);
     setShowModal(true);
   };
+
+  const handleCheckout = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Paso 1: Crear la orden en tu backend.
+      const orderResponse = await apiClient.post(
+        "ordenes/crear_desde_carrito/"
+      );
+      console.log(orderResponse);
+
+      if (orderResponse.status !== 201) {
+        const errorData = await orderResponse.data;
+        throw new Error(errorData.error || "Error al crear la orden.");
+      }
+
+      const orderData = await orderResponse.data;
+      const orden_id = orderData.orden_id; // Ajusta esto según la respuesta de tu API
+
+      if (!orden_id) {
+        throw new Error("La respuesta del servidor no incluyó un ID de orden.");
+      }
+      console.log(orden_id);
+      // Paso 2: Crear el Payment Intent con el ID de la orden.
+      const paymentIntentResponse = await apiClient.post(
+        "pagos/create-payment-intent/",
+        {
+          orden_id: orden_id,
+        }
+      );
+      console.log(paymentIntentResponse);
+      if (paymentIntentResponse.status !== 200) {
+        const errorData = await paymentIntentResponse.data;
+        throw new Error(errorData.error || "Error al iniciar el pago.");
+      }
+
+      const paymentData = await paymentIntentResponse.data;
+      console.log(paymentData.clientSecret);
+      setClientSecret(paymentData.clientSecret);
+      setShowPaymentModal(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePaymentSuccess = async (paymentIntent) => {
+    console.log("Pago exitoso:", paymentIntent);
+    setPaymentSuccess(true);
+    //limpiar carrito post a comercio/carrito/limpiar/
+    const response = await apiClient.post("carrito/limpiar/");
+    console.log(response);
+    setShowPaymentModal(false);
+    //wait 5 seconds and then redirect to /comercio/carrito/
+    setTimeout(() => {
+      setPaymentSuccess(false);
+    }, 5000);
+    setCartItems([]); // Limpiar el carrito después de un pago exitoso
+  };
+
+  if (paymentSuccess) {
+    return (
+      <div className="flex flex-col items-center justify-center text-center p-10 h-screen">
+        <h1 className="text-3xl font-bold text-green-600 mb-4">
+          ¡Gracias por tu compra!
+        </h1>
+        <p className="text-lg">Tu pago ha sido procesado exitosamente.</p>
+        <p className="text-gray-600">
+          Recibirás un correo de confirmación pronto.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -191,16 +286,13 @@ export const Carrito = () => {
                   <button
                     className="w-full mt-6 bg-primary text-primary-foreground py-3 rounded-md font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={cartItems.length === 0}
-                    onClick={() => {
-                      if (!isAuthenticated) {
-                        alert(
-                          "Por favor, inicia sesión para proceder al pago."
-                        );
-                      }
-                    }}
+                    onClick={handleCheckout}
                   >
-                    Proceder al Pago
+                    {isLoading ? "Procesando..." : "Proceder al Pago"}
                   </button>
+                  {error && (
+                    <p className="text-red-500 mt-4 text-center">{error}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -231,6 +323,18 @@ export const Carrito = () => {
                   </button>
                 </div>
               </div>
+            </div>
+          )}
+
+          {showPaymentModal && clientSecret && (
+            <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <StripeCheckoutForm
+                  clientSecret={clientSecret}
+                  onSuccess={handlePaymentSuccess}
+                  onCancel={() => setShowPaymentModal(false)}
+                />
+              </Elements>
             </div>
           )}
         </div>
