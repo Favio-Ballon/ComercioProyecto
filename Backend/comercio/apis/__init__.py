@@ -6,3 +6,4 @@ from .cita_viewset import CitaViewSet
 from .orden_viewset import OrdenViewSet
 from .categoria_viewset import CategoriaViewSet
 from .tipoExamen_viewset import TipoExamenViewSet
+from .payment_views import PaymentViewSet

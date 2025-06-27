@@ -44,16 +44,24 @@ class AuthViewSet(viewsets.ViewSet):
         direccion = request.data.get('direccion')
         telefono = request.data.get('telefono')
 
+        print(f"Datos recibidos: {request.data}")
         if not password or not username or not email:
+            print("Faltan datos de email, contraseña o nombre de usuario")
             return Response({'error': 'El email y la contraseña son requeridos'}, status=400)
         if User.objects.filter(email=email).exists():
+            print("El email ya está en uso")
             return Response({'error': 'El email ya está en uso'}, status=400)
         if User.objects.filter(username=username).exists():
+            print("El nombre de usuario ya está en uso")
             return Response({'error': 'El nombre de usuario ya está en uso'}, status=400)
         if not nombre or not apellido:
+            print("Faltan datos de nombre o apellido")
             return Response({'error': 'El nombre y apellido son requeridos'}, status=400)
         if not direccion or not telefono:
+            print("Faltan datos de dirección o teléfono")
             return Response({'error': 'La dirección y el teléfono son requeridos'}, status=400)
+
+        print("Creando usuario...")
         user = User.objects.create_user(username, email, password, first_name=nombre, last_name=apellido)
         usuario = Usuario.objects.create(user=user, direccion=direccion, telefono=telefono)
         usuario.save()
