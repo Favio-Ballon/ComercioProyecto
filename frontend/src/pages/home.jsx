@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { useState, useEffect, lazy } from "react";
 import {
   FaHeadphones,
   FaBatteryFull,
@@ -14,6 +13,7 @@ import beltone from "../assets/beltone.webp";
 import resound from "../assets/resound.webp";
 import duracell from "../assets/duracell.webp";
 import rayovac from "../assets/rayovac.webp";
+import equipo from "../assets/equipo.webp";
 
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -135,8 +135,9 @@ const App = () => {
             <div className="mt-8 lg:mt-0 lg:w-1/2">
               <img
                 className="rounded-lg shadow-lg"
-                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef"
+                src={equipo}
                 alt="Equipo profesional"
+                loading="lazy"
               />
             </div>
           </div>
@@ -201,6 +202,7 @@ const App = () => {
                 src={brand}
                 alt="Brand logo"
                 className="h-12 object-contain filter grayscale hover:grayscale-0 transition-all"
+                loading="lazy"
               />
             ))}
           </div>

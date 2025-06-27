@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /admin
+Disallow: /api
+Disallow: /private
+Disallow: /carrito
+
+# Permitir todo lo demás
+Allow: /
+
+# Sitemap (ajusta la URL si tienes sitemap.xml)
+Sitemap: https://audioprod.com/sitemap.xml

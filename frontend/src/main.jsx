@@ -8,6 +8,7 @@ import { Carrito } from "./pages/carrito";
 import { Citas } from "./pages/citas";
 import { LoginForm } from "./pages/login";
 import { RegisterForm } from "./pages/register";
+import { Ordenes } from "./pages/ordenes";
 import Layout from "./components/Layout";
 import Contacto from "./pages/contacto";
 
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterForm />,
+  },
+  {
+    path: "/ordenes",
+    element: (
+      <Layout>
+        <Ordenes />
+      </Layout>
+    ),
   },
 ]);
 

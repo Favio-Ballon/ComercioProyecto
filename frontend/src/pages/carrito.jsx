@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { Header } from "../components/header";
-import { isLoggedIn } from "../services/AuthService";
 import { ProductoService } from "../services/ProductoService";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -23,24 +22,16 @@ export const Carrito = () => {
   const [cartItems, setCartItems] = useState(mockCartItems);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [notification, setNotification] = useState("");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [paymentId, setPaymentId] = useState(null);
 
   useEffect(() => {
     getProductosEnCarrito();
-  }, []);
-
-  useEffect(() => {
-    if (isLoggedIn()) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
   }, []);
 
   const getProductosEnCarrito = async () => {
@@ -151,6 +142,7 @@ export const Carrito = () => {
       }
 
       const paymentData = await paymentIntentResponse.data;
+      setPaymentId(paymentData.payment.id);
       console.log(paymentData.clientSecret);
       setClientSecret(paymentData.clientSecret);
       setShowPaymentModal(true);
@@ -167,10 +159,15 @@ export const Carrito = () => {
     //limpiar carrito post a comercio/carrito/limpiar/
     const response = await apiClient.post("carrito/limpiar/");
     console.log(response);
+    const paymentResponse = await apiClient.post(
+      `pagos/${paymentId}/update-status/`
+    );
+    console.log(paymentResponse);
     setShowPaymentModal(false);
     //wait 5 seconds and then redirect to /comercio/carrito/
     setTimeout(() => {
       setPaymentSuccess(false);
+      window.location.href = "/ordenes";
     }, 5000);
     setCartItems([]); // Limpiar el carrito después de un pago exitoso
   };

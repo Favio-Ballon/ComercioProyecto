@@ -57,4 +57,54 @@ export class ProductoService {
         });
     });
   };
+
+  getOrdenesUsuario = async () => {
+    return new Promise((resolve, reject) => {
+      apiClient
+        .get("pagos/")
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener órdenes del usuario:", error);
+          reject(
+            new Error("Error al obtener órdenes del usuario: " + error.message)
+          );
+        });
+    });
+  };
+
+  getDetalleOrden = async (ordenId) => {
+    return new Promise((resolve, reject) => {
+      apiClient
+        .get(`pagos/${ordenId}/`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener detalle de la orden:", error);
+          reject(
+            new Error("Error al obtener detalle de la orden: " + error.message)
+          );
+        });
+    });
+  };
+
+  getOrdenInfo = async (ordenId) => {
+    return new Promise((resolve, reject) => {
+      apiClient
+        .get(`ordenes/${ordenId}/`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener información de la orden:", error);
+          reject(
+            new Error(
+              "Error al obtener información de la orden: " + error.message
+            )
+          );
+        });
+    });
+  };
 }
