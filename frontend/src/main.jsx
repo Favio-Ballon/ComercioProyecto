@@ -8,23 +8,50 @@ import { Carrito } from "./pages/carrito";
 import { Citas } from "./pages/citas";
 import { LoginForm } from "./pages/login";
 import { RegisterForm } from "./pages/register";
+import { Ordenes } from "./pages/ordenes";
+import Layout from "./components/Layout";
+import Contacto from "./pages/contacto";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <Layout>
+        <App />
+      </Layout>
+    ),
   },
   {
     path: "/productos",
-    element: <Productos />,
+    element: (
+      <Layout>
+        <Productos />
+      </Layout>
+    ),
   },
   {
     path: "/carrito",
-    element: <Carrito />,
+    element: (
+      <Layout>
+        <Carrito />
+      </Layout>
+    ),
   },
   {
     path: "/servicios",
-    element: <Citas />,
+    element: (
+      <Layout>
+        <Citas />
+      </Layout>
+    ),
+  },
+  {
+    path: "/contacto",
+    element: (
+      <Layout>
+        <Contacto />
+      </Layout>
+    ),
   },
   {
     path: "/login",
@@ -33,6 +60,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterForm />,
+  },
+  {
+    path: "/ordenes",
+    element: (
+      <Layout>
+        <Ordenes />
+      </Layout>
+    ),
   },
 ]);
 
