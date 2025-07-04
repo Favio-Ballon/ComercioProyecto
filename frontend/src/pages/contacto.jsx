@@ -68,7 +68,7 @@ const Contacto = () => {
                   <FaPhone className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h3 className="font-medium text-foreground">Teléfono</h3>
-                    <p className="text-accent">+1 234 567 890</p>
+                    <p className="text-accent">76650703</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
