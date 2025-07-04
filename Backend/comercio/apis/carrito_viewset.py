@@ -89,3 +89,15 @@ class CarritoViewSet(viewsets.ModelViewSet):
 
         except Exception as e:
             return Response({'error': str(e)}, status=500)
+
+    # metodo eliminar todos los items del carrito
+    @action(detail=False, methods=['post'], url_path='limpiar')
+    def limpiar_carrito(self, request):
+        try:
+            carrito = Carrito.objects.get(usuario=request.user)
+            carrito.items.all().delete()  # Elimina todos los items del carrito
+            return Response({'status': 'Carrito limpiado exitosamente'}, status=200)
+        except Carrito.DoesNotExist:
+            return Response({'error': 'Carrito no encontrado'}, status=404)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)

@@ -7,3 +7,4 @@ from .OrdenItem import OrdenItem
 from .CarritoItem import CarritoItem
 from .TipoExamen import TipoExamen
 from .Usuario import Usuario
+from .Payment import Payment
