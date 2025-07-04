@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect } from "react";
 import {
   FaHeadphones,
   FaBatteryFull,
@@ -16,16 +16,13 @@ import rayovac from "../assets/rayovac-optimized.webp";
 import equipo from "../assets/equipo-optimized.webp";
 
 const App = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const testimonials = [];
 
   const brands = [beltone, resound, duracell, rayovac];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % testimonials.length);
+      // setCurrentSlide((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -36,7 +33,7 @@ const App = () => {
       <Header />
 
       {/* Hero Section */}
-      <div className="relative pt-20">
+      <section className="relative pt-20">
         <div className="absolute inset-0">
           <img
             className="w-full h-full object-cover"
@@ -53,13 +50,16 @@ const App = () => {
             Mejorando tu Vida
           </h1>
         </div>
-      </div>
+      </section>
 
-      {/* Quick Access Buttons */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Quick Access Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-3xl font-bold text-foreground mb-8">
+          Accesos Rápidos
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-card p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-            <h2 className="text-xl font-semibold mb-4">Productos</h2>
+            <h3 className="text-xl font-semibold mb-4">Productos</h3>
             <div className="grid grid-cols-3 gap-4">
               <button
                 className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -86,7 +86,7 @@ const App = () => {
           </div>
 
           <div className="bg-card p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-            <h2 className="text-xl font-semibold mb-4">Servicios</h2>
+            <h3 className="text-xl font-semibold mb-4">Servicios</h3>
             <div className="grid grid-cols-3 gap-4">
               <button
                 className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -112,16 +112,16 @@ const App = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Company Overview */}
-      <div className="bg-secondary py-16">
+      <section className="bg-secondary py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-foreground mb-12">
+            Quiénes Somos
+          </h2>
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="lg:w-1/2">
-              <h2 className="text-3xl font-bold text-foreground mb-6">
-                Quiénes Somos
-              </h2>
               <p className="text-accent mb-4">
                 Somos un centro auditivo comprometido con mejorar la calidad de
                 vida de nuestros pacientes a través de soluciones auditivas
@@ -142,7 +142,7 @@ const App = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Testimonials Carousel */}
       {/* <div className="bg-card py-16">
@@ -190,7 +190,7 @@ const App = () => {
       </div> */}
 
       {/* Brands Distribution */}
-      <div className="bg-background py-16">
+      <section className="bg-background py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-foreground mb-12">
             Marcas Distribuidas
@@ -207,10 +207,10 @@ const App = () => {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Call-to-Action */}
-      <div className="bg-primary py-16">
+      <section className="bg-primary py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-primary-foreground mb-8">
             ¿Listo para mejorar tu audición?
@@ -223,18 +223,19 @@ const App = () => {
             Agendar Cita
           </button>
         </div>
-      </div>
+      </section>
 
       {/* Footer */}
-      <footer className="bg-card">
+      <footer className="bg-card" aria-label="Pie de página">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <h2 className="sr-only">Información de pie de página</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-semibold text-foreground mb-4">
                 Contacto
               </h3>
-              <p className="text-accent">Email: info@auditorycenter.com</p>
-              <p className="text-accent">Teléfono: +1 234 567 890</p>
+              <p className="text-accent">Email: audioprod@gmail.com</p>
+              <p className="text-accent">Teléfono: 76650703</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground mb-4">
@@ -321,7 +322,7 @@ const App = () => {
           </div>
           <div className="mt-8 pt-8 border-t border-input text-center">
             <p className="text-accent">
-              &copy; 2024 Auditory Center. Todos los derechos reservados.
+              &copy; 2025 Audioprod. Todos los derechos reservados.
             </p>
           </div>
         </div>
