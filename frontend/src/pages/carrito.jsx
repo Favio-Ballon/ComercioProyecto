@@ -27,6 +27,7 @@ const Carrito = () => {
   const [clientSecret, setClientSecret] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingCartItems, setLoadingCartItems] = useState(true);
   const [error, setError] = useState(null);
   const [paymentId, setPaymentId] = useState(null);
 
@@ -36,6 +37,7 @@ const Carrito = () => {
 
   const getProductosEnCarrito = async () => {
     try {
+      setLoadingCartItems(true);
       const results = await new ProductoService().getProductosCarrito();
       const items = [];
 
@@ -55,6 +57,8 @@ const Carrito = () => {
       setCartItems(items);
     } catch (error) {
       console.error("Error al cargar los productos del carrito:", error);
+    } finally {
+      setLoadingCartItems(false);
     }
   };
 
@@ -171,6 +175,14 @@ const Carrito = () => {
     }, 5000);
     setCartItems([]); // Limpiar el carrito después de un pago exitoso
   };
+
+  if (loadingCartItems) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   if (paymentSuccess) {
     return (

@@ -17,6 +17,7 @@ const Productos = () => {
     },
   ]);
 
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
@@ -52,6 +53,7 @@ const Productos = () => {
 
   const getProductos = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
         "http://localhost:8000/comercio/productos/"
       );
@@ -68,6 +70,8 @@ const Productos = () => {
       console.log("Fetched products:", fetchedProducts);
     } catch (error) {
       console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -116,6 +120,14 @@ const Productos = () => {
       setTimeout(() => setNotification(""), 2500);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <>
