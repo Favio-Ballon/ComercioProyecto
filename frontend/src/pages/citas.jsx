@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { format, isAfter, startOfToday } from "date-fns";
 import { es } from "date-fns/locale";
-import {
-  FiClock,
-  FiCalendar,
-  FiDollarSign,
-  FiFileText,
-} from "react-icons/fi";
+import { FiClock, FiCalendar, FiDollarSign, FiFileText } from "react-icons/fi";
 import { Header } from "../components/header";
 
-export const Citas = () => {
+const Citas = () => {
   const [selectedExam, setSelectedExam] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -307,3 +302,5 @@ export const Citas = () => {
     </>
   );
 };
+
+export default Citas;

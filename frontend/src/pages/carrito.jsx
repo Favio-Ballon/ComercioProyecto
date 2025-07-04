@@ -18,7 +18,7 @@ const mockCartItems = [
 // Carga tu clave pública de Stripe desde las variables de entorno.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-export const Carrito = () => {
+const Carrito = () => {
   const [cartItems, setCartItems] = useState(mockCartItems);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -344,3 +344,5 @@ export const Carrito = () => {
     </>
   );
 };
+
+export default Carrito;

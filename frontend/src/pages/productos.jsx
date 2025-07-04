@@ -4,7 +4,7 @@ import { Header } from "../components/header";
 import axios from "axios";
 import { ProductoService } from "../services/ProductoService";
 
-export const Productos = () => {
+const Productos = () => {
   const [notification, setNotification] = useState("");
   const [products, setProducts] = useState([
     {
@@ -266,3 +266,5 @@ export const Productos = () => {
     </>
   );
 };
+
+export default Productos;

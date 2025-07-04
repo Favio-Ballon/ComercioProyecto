@@ -14,7 +14,7 @@ import {
   FiXCircle,
 } from "react-icons/fi";
 
-export const Ordenes = () => {
+const Ordenes = () => {
   const [ordenes, setOrdenes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -324,3 +324,5 @@ export const Ordenes = () => {
     </>
   );
 };
+
+export default Ordenes;

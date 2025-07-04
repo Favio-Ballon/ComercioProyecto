@@ -5,7 +5,7 @@ import { AuthService } from "../services/AuthService";
 import { isLoggedIn } from "../services/AuthService";
 import { Header } from "../components/header";
 
-export const LoginForm = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -131,3 +131,5 @@ export const LoginForm = () => {
     </>
   );
 };
+
+export default LoginForm;

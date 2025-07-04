@@ -1,4 +1,4 @@
-import { FiShoppingCart, FiMenu, FiX, FiPackage } from "react-icons/fi";
+import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import logo from "../assets/logo_audioprod.webp";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -21,76 +21,93 @@ export const Header = () => {
   const currentSection = location.pathname.split("/")[1];
 
   return (
-    <nav className="bg-card shadow-sm fixed w-full z-50">
+    <header className="bg-card shadow-sm fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <img
-              className="h-22 w-auto"
+            <button
+              className="h-22 w-auto focus:outline-none"
+              aria-label="Ir a la página principal"
               onClick={() => {
                 navigate("/");
               }}
-              src={logo}
-              alt="Logo"
-            />
+              style={{ background: "none", border: "none", padding: 0 }}
+            >
+              <img
+                src={logo}
+                alt="Logo Auditory Center"
+                className="h-22 w-auto"
+              />
+            </button>
           </div>
 
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <button
-                aria-label="Ir a página de productos"
-                role="link"
-                name="productos"
-                className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
-                  currentSection === "productos" ? "text-primary" : ""
-                }`}
-                onClick={() => {
-                  navigate("/productos");
-                }}
-              >
-                Productos
-              </button>
-              <button
-                aria-label="Ir a página de servicios"
-                role="link"
-                name="servicios"
-                className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
-                  currentSection === "servicios" ? "text-primary" : ""
-                }`}
-                onClick={() => {
-                  navigate("/servicios");
-                }}
-              >
-                Servicios
-              </button>
-              <button
-                aria-label="Ir a página de sobre nosotros"
-                role="link"
-                name="sobre nosotros"
-                className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Sobre Nosotros
-              </button>
-              <button
-                aria-label="Ir a página de contacto"
-                role="link"
-                name="contacto"
-                className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
-                  currentSection === "contacto" ? "text-primary" : ""
-                }`}
-                onClick={() => {
-                  navigate("/contacto");
-                }}
-              >
-                Contacto
-              </button>
-            </div>
-          </div>
+          <nav aria-label="Navegación principal" className="hidden md:block">
+            <ul className="ml-10 flex items-baseline space-x-4">
+              <li>
+                <button
+                  aria-label="Ir a página de productos"
+                  role="link"
+                  name="productos"
+                  className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
+                    currentSection === "productos" ? "text-primary" : ""
+                  }`}
+                  onClick={() => {
+                    navigate("/productos");
+                  }}
+                >
+                  Productos
+                </button>
+              </li>
+              <li>
+                <button
+                  aria-label="Ir a página de servicios"
+                  role="link"
+                  name="servicios"
+                  className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
+                    currentSection === "servicios" ? "text-primary" : ""
+                  }`}
+                  onClick={() => {
+                    navigate("/servicios");
+                  }}
+                >
+                  Servicios
+                </button>
+              </li>
+              <li>
+                <button
+                  aria-label="Ir a página de sobre nosotros"
+                  role="link"
+                  name="sobre nosotros"
+                  className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Sobre Nosotros
+                </button>
+              </li>
+              <li>
+                <button
+                  aria-label="Ir a página de contacto"
+                  role="link"
+                  name="contacto"
+                  className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
+                    currentSection === "contacto" ? "text-primary" : ""
+                  }`}
+                  onClick={() => {
+                    navigate("/contacto");
+                  }}
+                >
+                  Contacto
+                </button>
+              </li>
+            </ul>
+          </nav>
 
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <button className="text-foreground hover:text-primary">
+                <button
+                  className="text-foreground hover:text-primary"
+                  aria-label="Ir al carrito"
+                >
                   <FiShoppingCart
                     onClick={() => {
                       navigate("/carrito");
@@ -166,131 +183,129 @@ export const Header = () => {
 
       {/* Menú móvil */}
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-card border-t border-border">
-            <button
-              aria-label="Ir a página de productos"
-              role="link"
-              name="productos"
-              className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                currentSection === "productos" ? "text-primary" : ""
-              }`}
-              onClick={() => {
-                navigate("/productos");
-                setIsMenuOpen(false);
-              }}
-            >
-              Productos
-            </button>
-            <button
-              aria-label="Ir a página de servicios"
-              role="link"
-              name="servicios"
-              className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                currentSection === "servicios" ? "text-primary" : ""
-              }`}
-              onClick={() => {
-                navigate("/servicios");
-                setIsMenuOpen(false);
-              }}
-            >
-              Servicios
-            </button>
-            <button 
-            aria-label="Ir a página de Sobre Nosotros"
-            role="link"
-            name="Sobre Nosotros"
-            className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left">
-              Sobre Nosotros
-            </button>
-            <button
-            aria-label="Ir a página de Contacto"
-            role="link"
-            name="Contacto"
-              className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                currentSection === "contacto" ? "text-primary" : ""
-              }`}
-              onClick={() => {
-                navigate("/contacto");
-                setIsMenuOpen(false);
-              }}
-            >
-              Contacto
-            </button>
-
-            {isAuthenticated && (
-              <>
-                <button
-                aria-label="Ir a página Carrito"
-                role="link"
-                name="Carrito"
-                  className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                    currentSection === "carrito" ? "text-primary" : ""
-                  }`}
-                  onClick={() => {
-                    navigate("/carrito");
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <FiShoppingCart />
-                    Carrito
-                  </div>
-                </button>
-                <button
-                aria-label="Ir a página Mis Compras"
-                role="link"
-                name="Mis Compras"
-                  className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                    currentSection === "ordenes" ? "text-primary" : ""
-                  }`}
-                  onClick={() => {
-                    navigate("/ordenes");
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <FiPackage />
-                    Mis Compras
-                  </div>
-                </button>
-                <button
-                  aria-label="Cerrar sesión"
-                  role="button"
-                  name="cerrar sesion"
-                  className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left"
-                  onClick={() => {
-                    localStorage.removeItem("access_token");
-                    localStorage.removeItem("refresh_token");
-                    setIsAuthenticated(false);
-                    setIsMenuOpen(false);
-                    navigate("/login");
-                  }}
-                >
-                  Cerrar Sesión
-                </button>
-              </>
-            )}
-
-            {!isAuthenticated && (
+        <nav className="md:hidden" aria-label="Navegación móvil">
+          <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-card border-t border-border">
+            <li>
               <button
-                aria-label="Iniciar sesión"
+                aria-label="Ir a página de productos"
                 role="link"
-                name="iniciar sesion"
+                name="productos"
                 className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                  currentSection === "login" ? "text-primary" : ""
+                  currentSection === "productos" ? "text-primary" : ""
                 }`}
                 onClick={() => {
-                  navigate("/login");
+                  navigate("/productos");
                   setIsMenuOpen(false);
                 }}
               >
-                Iniciar Sesión
+                Productos
               </button>
-            )}
-          </div>
-        </div>
+            </li>
+            <li>
+              <button
+                aria-label="Ir a página de servicios"
+                role="link"
+                name="servicios"
+                className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
+                  currentSection === "servicios" ? "text-primary" : ""
+                }`}
+                onClick={() => {
+                  navigate("/servicios");
+                  setIsMenuOpen(false);
+                }}
+              >
+                Servicios
+              </button>
+            </li>
+            <li>
+              <button
+                aria-label="Ir a página de Sobre Nosotros"
+                role="link"
+                name="sobre nosotros"
+                className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+              >
+                Sobre Nosotros
+              </button>
+            </li>
+            <li>
+              <button
+                aria-label="Ir a página de contacto"
+                role="link"
+                name="contacto"
+                className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
+                  currentSection === "contacto" ? "text-primary" : ""
+                }`}
+                onClick={() => {
+                  navigate("/contacto");
+                  setIsMenuOpen(false);
+                }}
+              >
+                Contacto
+              </button>
+            </li>
+            <li>
+              {isAuthenticated ? (
+                <>
+                  <button
+                    className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                    aria-label="Ir al carrito"
+                    onClick={() => {
+                      navigate("/carrito");
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Carrito
+                  </button>
+                  <button
+                    aria-label="Ir a página de mis compras"
+                    role="link"
+                    name="mis compras"
+                    className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
+                      currentSection === "ordenes" ? "text-primary" : ""
+                    }`}
+                    onClick={() => {
+                      navigate("/ordenes");
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Mis Compras
+                  </button>
+                  <button
+                    aria-label="Cerrar sesión"
+                    role="button"
+                    name="cerrar sesion"
+                    className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                    onClick={() => {
+                      localStorage.removeItem("access_token");
+                      localStorage.removeItem("refresh_token");
+                      setIsAuthenticated(false);
+                      setIsMenuOpen(false);
+                      navigate("/login");
+                    }}
+                  >
+                    Cerrar Sesión
+                  </button>
+                </>
+              ) : (
+                <button
+                  aria-label="Iniciar sesión"
+                  role="link"
+                  name="iniciar sesion"
+                  className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
+                    currentSection === "login" ? "text-primary" : ""
+                  }`}
+                  onClick={() => {
+                    navigate("/login");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  Iniciar Sesión
+                </button>
+              )}
+            </li>
+          </ul>
+        </nav>
       )}
-    </nav>
+    </header>
   );
 };

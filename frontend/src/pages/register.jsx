@@ -3,11 +3,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
 
-export const RegisterForm = () => {
+const RegisterForm = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = async (data) => {
     setIsLoading(true);
@@ -38,13 +42,14 @@ export const RegisterForm = () => {
     { id: "telefono", label: "Teléfono", type: "text" },
     { id: "direccion", label: "Dirección", type: "text" },
     { id: "username", label: "Nombre de usuario", type: "text" },
-
   ];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/30">
       <div className="w-full max-w-md p-8 bg-card rounded-lg shadow-lg hover:scale-[1.02] transition-transform duration-300">
-        <h2 className="text-2xl font-bold text-center mb-8 text-foreground">Registro</h2>
+        <h2 className="text-2xl font-bold text-center mb-8 text-foreground">
+          Registro
+        </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {campos.map((campo) => (
@@ -65,7 +70,9 @@ export const RegisterForm = () => {
                 {campo.label}
               </label>
               {errors[campo.id] && (
-                <p className="mt-1 text-sm text-destructive">Este campo es requerido</p>
+                <p className="mt-1 text-sm text-destructive">
+                  Este campo es requerido
+                </p>
               )}
             </div>
           ))}
@@ -88,7 +95,9 @@ export const RegisterForm = () => {
               Contraseña
             </label>
             {errors.password && (
-              <p className="mt-1 text-sm text-destructive">Este campo es requerido</p>
+              <p className="mt-1 text-sm text-destructive">
+                Este campo es requerido
+              </p>
             )}
           </div>
 
@@ -111,3 +120,5 @@ export const RegisterForm = () => {
     </div>
   );
 };
+
+export default RegisterForm;
