@@ -8,37 +8,18 @@ import {
   FaUserMd,
 } from "react-icons/fa";
 import { Header } from "../components/header";
-import hero from "../assets/hero.webp";
-import beltone from "../assets/beltone.webp";
-import resound from "../assets/resound.webp";
-import duracell from "../assets/duracell.webp";
-import rayovac from "../assets/rayovac.webp";
-import equipo from "../assets/equipo.webp";
+import hero from "../assets/hero-optimized.webp";
+import beltone from "../assets/beltone-optimized.webp";
+import resound from "../assets/resound-optimized.webp";
+import duracell from "../assets/duracell-optimized.webp";
+import rayovac from "../assets/rayovac-optimized.webp";
+import equipo from "../assets/equipo-optimized.webp";
 
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const testimonials = [
-    // {
-    //   name: "María García",
-    //   quote:
-    //     "Los audífonos han cambiado mi vida completamente. Ahora puedo disfrutar de conversaciones con mi familia.",
-    //   image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
-    // },
-    // {
-    //   name: "Juan Pérez",
-    //   quote:
-    //     "El servicio profesional y la atención personalizada fueron excepcionales.",
-    //   image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
-    // },
-    // {
-    //   name: "Ana Martínez",
-    //   quote:
-    //     "Gracias al centro auditivo, he recuperado mi confianza en situaciones sociales.",
-    //   image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2",
-    // },
-  ];
+  const testimonials = [];
 
   const brands = [beltone, resound, duracell, rayovac];
 
@@ -61,6 +42,7 @@ const App = () => {
             className="w-full h-full object-cover"
             src={hero}
             alt="Hearing aids"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-black opacity-40"></div>
         </div>
@@ -79,15 +61,24 @@ const App = () => {
           <div className="bg-card p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
             <h2 className="text-xl font-semibold mb-4">Productos</h2>
             <div className="grid grid-cols-3 gap-4">
-              <button className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors">
+              <button
+                className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Ver productos de audífonos"
+              >
                 <FaHeadphones className="h-8 w-8 mb-2" />
                 <span>Audífonos</span>
               </button>
-              <button className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors">
+              <button
+                className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Ver productos de pilas"
+              >
                 <FaBatteryFull className="h-8 w-8 mb-2" />
                 <span>Pilas</span>
               </button>
-              <button className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors">
+              <button
+                className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Ver accesorios"
+              >
                 <FaCogs className="h-8 w-8 mb-2" />
                 <span>Accesorios</span>
               </button>
@@ -97,15 +88,24 @@ const App = () => {
           <div className="bg-card p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
             <h2 className="text-xl font-semibold mb-4">Servicios</h2>
             <div className="grid grid-cols-3 gap-4">
-              <button className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors">
+              <button
+                className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Ver servicios de exámenes auditivos"
+              >
                 <FaStethoscope className="h-8 w-8 mb-2" />
                 <span>Exámenes</span>
               </button>
-              <button className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors">
+              <button
+                className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Ver servicios de adaptación de audífonos"
+              >
                 <FaUserMd className="h-8 w-8 mb-2" />
                 <span>Adaptación</span>
               </button>
-              <button className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors">
+              <button
+                className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Ver servicios de mantenimiento"
+              >
                 <FaTools className="h-8 w-8 mb-2" />
                 <span>Mantenimiento</span>
               </button>
@@ -218,6 +218,7 @@ const App = () => {
           <button
             onClick={() => setIsModalOpen(true)}
             className="bg-white text-primary px-8 py-3 rounded-md font-semibold hover:bg-opacity-90 transition-colors"
+            aria-label="Abrir formulario para agendar cita"
           >
             Agendar Cita
           </button>
@@ -241,22 +242,34 @@ const App = () => {
               </h3>
               <ul className="space-y-2">
                 <li>
-                  <button className="text-accent hover:text-primary">
+                  <button
+                    className="text-accent hover:text-primary"
+                    aria-label="Ir a página de productos"
+                  >
                     Productos
                   </button>
                 </li>
                 <li>
-                  <button className="text-accent hover:text-primary">
+                  <button
+                    className="text-accent hover:text-primary"
+                    aria-label="Ir a página de servicios"
+                  >
                     Servicios
                   </button>
                 </li>
                 <li>
-                  <button className="text-accent hover:text-primary">
+                  <button
+                    className="text-accent hover:text-primary"
+                    aria-label="Ir a página sobre nosotros"
+                  >
                     Sobre Nosotros
                   </button>
                 </li>
                 <li>
-                  <button className="text-accent hover:text-primary">
+                  <button
+                    className="text-accent hover:text-primary"
+                    aria-label="Ir a página de contacto"
+                  >
                     Contacto
                   </button>
                 </li>
@@ -267,13 +280,22 @@ const App = () => {
                 Redes Sociales
               </h3>
               <div className="flex space-x-4">
-                <button className="text-accent hover:text-primary">
+                <button
+                  className="text-accent hover:text-primary"
+                  aria-label="Visitar página de Facebook"
+                >
                   Facebook
                 </button>
-                <button className="text-accent hover:text-primary">
+                <button
+                  className="text-accent hover:text-primary"
+                  aria-label="Visitar página de Twitter"
+                >
                   Twitter
                 </button>
-                <button className="text-accent hover:text-primary">
+                <button
+                  className="text-accent hover:text-primary"
+                  aria-label="Visitar página de Instagram"
+                >
                   Instagram
                 </button>
               </div>
@@ -288,7 +310,10 @@ const App = () => {
                   placeholder="Tu email"
                   className="flex-1 px-4 py-2 rounded-l-md border border-input focus:outline-none focus:ring-2 focus:ring-primary"
                 />
-                <button className="bg-primary text-primary-foreground px-4 py-2 rounded-r-md hover:bg-opacity-90 transition-colors">
+                <button
+                  className="bg-primary text-primary-foreground px-4 py-2 rounded-r-md hover:bg-opacity-90 transition-colors"
+                  aria-label="Suscribirse al newsletter"
+                >
                   Suscribir
                 </button>
               </div>

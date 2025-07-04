@@ -175,6 +175,9 @@ const Chatbot = () => {
     <div className="fixed bottom-4 right-4 z-50" ref={chatRef}>
       {/* Botón flotante del chat */}
       <button
+        aria-label="Abrir chatbot"
+        role="button"
+        name="chatbot"
         onClick={() => setIsOpen(!isOpen)}
         className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-4 shadow-lg transition-all duration-300"
       >

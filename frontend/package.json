@@ -11,7 +11,8 @@
     "start": "set NODE_ENV=production&& node server.js",
     "start:dev": "set NODE_ENV=development&& node server.js",
     "build:prod": "vite build && set NODE_ENV=production&& node server.js",
-    "preview:compressed": "vite build && vite preview --port 3000"
+    "preview:compressed": "vite build && vite preview --port 3000",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -28,6 +29,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.57.0",
     "react-icons": "^5.5.0",
+    "react-lazy-load-image-component": "^1.6.0",
     "react-markdown": "^10.1.0",
     "react-router": "^7.6.1",
     "react-router-dom": "^7.6.2"
@@ -43,9 +45,13 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
+    "imagemin": "^8.0.1",
+    "imagemin-webp": "^8.0.0",
     "sharp": "^0.34.2",
+    "terser": "^5.43.1",
     "vite": "^6.0.5",
-    "vite-plugin-compression2": "^2.2.0"
+    "vite-plugin-compression2": "^2.2.0",
+    "vite-plugin-imagemin": "^0.6.1"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

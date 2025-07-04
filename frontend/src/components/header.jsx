@@ -38,6 +38,9 @@ export const Header = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <button
+                aria-label="Ir a página de productos"
+                role="link"
+                name="productos"
                 className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
                   currentSection === "productos" ? "text-primary" : ""
                 }`}
@@ -48,6 +51,9 @@ export const Header = () => {
                 Productos
               </button>
               <button
+                aria-label="Ir a página de servicios"
+                role="link"
+                name="servicios"
                 className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
                   currentSection === "servicios" ? "text-primary" : ""
                 }`}
@@ -57,10 +63,18 @@ export const Header = () => {
               >
                 Servicios
               </button>
-              <button className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+              <button
+                aria-label="Ir a página de sobre nosotros"
+                role="link"
+                name="sobre nosotros"
+                className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+              >
                 Sobre Nosotros
               </button>
               <button
+                aria-label="Ir a página de contacto"
+                role="link"
+                name="contacto"
                 className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
                   currentSection === "contacto" ? "text-primary" : ""
                 }`}
@@ -87,6 +101,9 @@ export const Header = () => {
                   />
                 </button>
                 <button
+                  aria-label="Ir a página de mis compras"
+                  role="link"
+                  name="mis compras"
                   className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
                     currentSection === "ordenes" ? "text-primary" : ""
                   }`}
@@ -98,6 +115,9 @@ export const Header = () => {
                 </button>
                 {/* cerrar sesion */}
                 <button
+                  aria-label="Cerrar sesión"
+                  role="button"
+                  name="cerrar sesion"
                   className="text-foreground hover:text-primary pl-5"
                   onClick={() => {
                     //eliminar token
@@ -112,6 +132,9 @@ export const Header = () => {
               </>
             ) : (
               <button
+                aria-label="Iniciar sesión"
+                role="link"
+                name="iniciar sesion"
                 className={`text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
                   currentSection === "login" ? "text-primary" : ""
                 }`}
@@ -124,6 +147,9 @@ export const Header = () => {
             )}
             <div className="md:hidden">
               <button
+                aria-label="Abrir menú"
+                role="button"
+                name="menu"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-foreground hover:text-primary"
               >
@@ -143,6 +169,9 @@ export const Header = () => {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-card border-t border-border">
             <button
+              aria-label="Ir a página de productos"
+              role="link"
+              name="productos"
               className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
                 currentSection === "productos" ? "text-primary" : ""
               }`}
@@ -154,6 +183,9 @@ export const Header = () => {
               Productos
             </button>
             <button
+              aria-label="Ir a página de servicios"
+              role="link"
+              name="servicios"
               className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
                 currentSection === "servicios" ? "text-primary" : ""
               }`}
@@ -164,10 +196,17 @@ export const Header = () => {
             >
               Servicios
             </button>
-            <button className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+            <button 
+            aria-label="Ir a página de Sobre Nosotros"
+            role="link"
+            name="Sobre Nosotros"
+            className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left">
               Sobre Nosotros
             </button>
             <button
+            aria-label="Ir a página de Contacto"
+            role="link"
+            name="Contacto"
               className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
                 currentSection === "contacto" ? "text-primary" : ""
               }`}
@@ -182,6 +221,9 @@ export const Header = () => {
             {isAuthenticated && (
               <>
                 <button
+                aria-label="Ir a página Carrito"
+                role="link"
+                name="Carrito"
                   className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
                     currentSection === "carrito" ? "text-primary" : ""
                   }`}
@@ -196,6 +238,9 @@ export const Header = () => {
                   </div>
                 </button>
                 <button
+                aria-label="Ir a página Mis Compras"
+                role="link"
+                name="Mis Compras"
                   className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
                     currentSection === "ordenes" ? "text-primary" : ""
                   }`}
@@ -210,6 +255,9 @@ export const Header = () => {
                   </div>
                 </button>
                 <button
+                  aria-label="Cerrar sesión"
+                  role="button"
+                  name="cerrar sesion"
                   className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left"
                   onClick={() => {
                     localStorage.removeItem("access_token");
@@ -226,6 +274,9 @@ export const Header = () => {
 
             {!isAuthenticated && (
               <button
+                aria-label="Iniciar sesión"
+                role="link"
+                name="iniciar sesion"
                 className={`text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
                   currentSection === "login" ? "text-primary" : ""
                 }`}
